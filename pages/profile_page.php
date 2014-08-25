@@ -1,4 +1,8 @@
 <?php
+require "./db_connect.php";
+require "./profile_page_functions.php";
+//THIS LINE NEEDS TO BE CHANGED TO $usr = $_SESSION['username'];
+$usr = "sampleuser1";
 
 
 ?>
@@ -16,70 +20,56 @@
 </head>
 <body>
 <div class="container">
-	<h1 class="pageHeader">Edit Profile</h1>
+	<h2 class="pageHeader">Edit Profile</h2>
 	<legend>Current Profile</legend>
-		<p class="lead">bio</p>
-        <p id="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia aliquid perspiciatis commodi rerum quisquam consequatur vero laborum repudiandae similique facere quod pariatur maiores, blanditiis veniam cum soluta id doloribus, facilis.</p>
-		<p class="lead">experience</p>
-        <p id="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia aliquid perspiciatis commodi rerum quisquam consequatur vero laborum repudiandae similique facere quod pariatur maiores, blanditiis veniam cum soluta id doloribus, facilis.</p>
-		<p class="lead">skills</p>
-        <p id="message">
-        <ul>
-        	<li>
-        		php  
-        		<span class="glyphicon glyphicon-star"></span>
-        		<span class="glyphicon glyphicon-star"></span>
-        		<span class="glyphicon glyphicon-star"></span>
-        		<span class="glyphicon glyphicon-star"></span>
-        		<span class="glyphicon glyphicon-star-empty"></span>
-        	</li>
-        	<li>ruby on rails
-        		<span class="glyphicon glyphicon-star"></span>
-        		<span class="glyphicon glyphicon-star"></span>
-        		<span class="glyphicon glyphicon-star"></span>
-        		<span class="glyphicon glyphicon-star-empty"></span>
-        		<span class="glyphicon glyphicon-star-empty"></span>
-        	</li>
-        	<li>c#
-        		<span class="glyphicon glyphicon-star"></span>
-        		<span class="glyphicon glyphicon-star-empty"></span>
-        		<span class="glyphicon glyphicon-star-empty"></span>
-        		<span class="glyphicon glyphicon-star-empty"></span>
-        		<span class="glyphicon glyphicon-star-empty"></span>
-        	</li>
-        </ul>
+		<?php
+      
+        $html_str = load_profile ($mysqli, $usr);
+        echo $html_str;
+        ?>
        </p>
 	<legend>Add/Remove Items</legend>
-        <form class="form form-inline" action="add_education.php" method="POST">
+        <form   class="form " 
+                action="update_profile.php" method="POST">
         <fieldset>
-        <p>Add a degree</p>
+   
             <div class="controls controls-row">
-                <select class="form-control required" name="degree" data-toggle='tooltip' data-placement='top' title='' data-original-title='degree'>
-                    <option value='BA'>BA</option>
-                    <option value='BS'>BS</option>
-                    <option value='MA'>MA</option>
-                    <option value='MS'>MS</option>
-                    <option value='MA'>MA</option>
-                    <option value='MBA'>MBA</option>
-                    <option value='PhD'>PhD</option>
-                    <option value='MD'>MD</option>
-                    <option value='EdD'>EdD</option>
-                    <option value='JD'>JD</option>
+                <p class="lead">BIO</p>
+                <textarea 
+                    name="bio" 
+                    id="bio" 
+                    rows="4"
+                    cols="50"
+                    placeholder="update bio...">update bio...
+                </textarea>
+                <p class="lead">EXPERIENCE</p>
+                <textarea 
+                    name="experience" 
+                    id="experience" 
+                    rows="4"
+                    cols="50"
+                    placeholder="update experience...">update experience...
+                </textarea>
+                <p class="lead">SKILLS</p>
+                <select class="form-control" name="skills" data-toggle='tooltip' data-placement='top' title='' data-original-title='skills'>
+                    <option value="C++">C++</option>
+                    <option value="Java">Java</option>
+                    <option value="JavaScript">JavaScript</option>
                 </select>
+                <select name="rating" class="form-control" data-toggle='tooltip' data-placement='top' title='' data-original-title='skill rating'>
+                    <option value="1">1 - Low</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5 - Expert</option>
+                </select>
+                <br>
 
-                <input type="text" name="area" placeholder="concentration" class="form-control" >
-                <?php
-                    echo "<select class='form-control required' name='class_of' placeholder='class year' data-toggle='tooltip' data-placement='top' title='' data-original-title='year of graduation'>";
-                        $grad_year = date("Y");
-                        for ($i=$grad_year; $i >= 1880; $i--) {
-                            echo "<option value = '".$i."' >".$i."</option>\n";
-                        }
-                        echo "</select>";
-                ?>
                 <button class="btn btn-primary span2" type="submit">Update</button>
             </div>
         </fieldset>
     </form>
+    <br><br>
 	
 
 <?php
