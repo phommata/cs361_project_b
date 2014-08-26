@@ -30,7 +30,7 @@ $usr = "sampleuser1";
        </p>
 	<legend>Add/Remove Items</legend>
         <form   class="form " 
-                action="update_profile.php" method="POST">
+                action="profile_page.php" method="POST">
         <fieldset>
    
             <div class="controls controls-row">
@@ -39,16 +39,23 @@ $usr = "sampleuser1";
                     name="bio" 
                     id="bio" 
                     rows="4"
-                    cols="50"
-                    placeholder="update bio...">update bio...
-                </textarea>
+                    cols="50">
+<?php 
+//current bio
+echo fill_edit_bio($mysqli, $usr);
+?>
+                    </textarea>
+                
                 <p class="lead">EXPERIENCE</p>
                 <textarea 
                     name="experience" 
                     id="experience" 
                     rows="4"
-                    cols="50"
-                    placeholder="update experience...">update experience...
+                    cols="50">
+<?php 
+//current solution
+echo fill_edit_experience($mysqli, $usr);
+?>
                 </textarea>
                 <p class="lead">SKILLS</p>
                 <select class="form-control" name="skills" data-toggle='tooltip' data-placement='top' title='' data-original-title='skills'>

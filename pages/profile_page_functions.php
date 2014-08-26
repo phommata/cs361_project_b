@@ -1,5 +1,4 @@
 <?php
-
 function load_profile ($mysqli, $username)
 {
 	/**/
@@ -38,7 +37,6 @@ function load_profile ($mysqli, $username)
 
 	return $outputString;
 }
-
 function fill_edit_experience ($mysqli, $username)
 {
 	$db_query = "
@@ -54,7 +52,6 @@ function fill_edit_experience ($mysqli, $username)
 	
 	return $experience;
 }
-
 function fill_edit_bio ($mysqli, $username)
 {
 	$db_query = "
@@ -70,7 +67,6 @@ function fill_edit_bio ($mysqli, $username)
 	
 	return $bio;
 }
-
 ?>
 
 
