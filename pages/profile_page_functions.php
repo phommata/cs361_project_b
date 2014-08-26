@@ -16,21 +16,6 @@ function load_profile ($mysqli, $username)
 	LEFT JOIN skills as c 
 	ON c.skill_id = b.skill_id
 	WHERE username = '".$username."'";
-/*
-	//prepared statement
-	if (!($stmt = $mysqli->prepare($db_query))) 
-	{
-		echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
-	}
-	//BIND VARIABLES TO BE INSERTED INTO TABLE
-	if (!$stmt->bind_param("sssss", $fname, $lname, $bio, $experience, $skills)) {
-		echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
-	}
-	//EXECUTE
-	if (!$stmt->execute()) {
-		echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-	}
-*/
 
 	$result= $mysqli->query($db_query);
 
@@ -54,24 +39,38 @@ function load_profile ($mysqli, $username)
 	return $outputString;
 }
 
-//temp for testing
+function fill_edit_experience ($mysqli, $username)
+{
+	$db_query = "
+	SELECT experience
+	FROM usr_db
+	WHERE username = '".$username."'";
 
-//CONNECT
-/*
-$mypassword = "RdNAmTfkrFADuWx1";
-		$mysqli = new mysqli("oniddb.cws.oregonstate.edu", "osterbit-db", $mypassword, "osterbit-db");
-		if ($mysqli->connect_errno) {
-			echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-		}
-		else {
-			echo "connected";
-		}
+	$result= $mysqli->query($db_query);
 
+	$row = mysqli_fetch_array($result);
+	
+	$experience = $row['experience'];
+	
+	return $experience;
+}
 
-$testUser = "sampleuser1";
-$html_str = load_profile ($mysqli, $testUser);
-echo $html_str;
-*/
+function fill_edit_bio ($mysqli, $username)
+{
+	$db_query = "
+	SELECT bio
+	FROM usr_db
+	WHERE username = '".$username."'";
+
+	$result= $mysqli->query($db_query);
+
+	$row = mysqli_fetch_array($result);
+	
+	$bio = $row['bio'];
+	
+	return $bio;
+}
+
 ?>
 
 
