@@ -30,7 +30,7 @@ $usr = "sampleuser1";
        </p>
 	<legend>Add/Remove Items</legend>
         <form   class="form " 
-                action="profile_page.php" method="POST">
+                action="update_profile.php" method="POST">
         <fieldset>
    
             <div class="controls controls-row">

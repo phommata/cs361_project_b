@@ -19,6 +19,7 @@ $usr = "sampleuser1"; //NEEDS TO BE UPDATED TO SESSION!!!!!!!
 		echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 	}
 	else {
+		//echo "success"
 		//echo "<html><head><title>Success!</title></head><body> <p> Success!</p> </body> </html>";
 		//header('Location: http://web.engr.oregonstate.edu/~osterbit/cs361/cs361_project_b/pages/profile_page.php');
     	//exit;	
@@ -33,6 +34,7 @@ $usr = "sampleuser1"; //NEEDS TO BE UPDATED TO SESSION!!!!!!!
 </head>
 <body>
 <script>
+	//sleep(10);
 	window.location.replace("http://web.engr.oregonstate.edu/~osterbit/cs361/cs361_project_b/pages/profile_page.php");
 </script>	
 </body>
