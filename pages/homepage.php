@@ -1,7 +1,13 @@
 <?php
-// 	session_start();
+	session_start();
 	//Turn on error reporting
 	ini_set('display_errors', 'On');
+	
+	if(!isset($_SESSION['username']) && !isset($_SESSION['logged_in_status'])) {
+		header("Location: login2.php");
+		exit();
+	}
+	
 	//Connects to the database
 	$mysqli = new mysqli("oniddb.cws.oregonstate.edu","phommata-db","Lm0QgLxFUbJHtq2D","phommata-db");
 	if($mysqli->connect_errno){
@@ -17,7 +23,7 @@
 	<link rel="stylesheet" href="stylesheets/bootstrap/css/docs.min.css">
 <body>
 <div class="container">
-	<h1 class="pageHeader">User's Homepage</br></br></h1>
+	<h1 class="pageHeader"><?php echo $_SESSION['first_name']; ?>'s Homepage</br></br></h1>
 	<table>
 		<tr>
 			<td>Job Name</td>
@@ -60,8 +66,8 @@
 		</div>
 		
 		<?php
-			$username = "sampleuser1";
-			$_SESSION['username'] = "sampleuser1";
+// 			$username = "sampleuser1";
+// 			$_SESSION['username'] = "sampleuser1";
 			if(!($stmt = $mysqli->prepare("SELECT j.job_name, j.job_emp, j.job_desc, j.job_pay, s.skill_name 
 											FROM job j 
 											INNER JOIN job_skills js ON j.job_id = js.job_id
@@ -74,7 +80,8 @@
 			}
 			
 			$stmt->bind_param("s", $_SESSION['username']);
-
+// 			echo "\$_SESSION['username']: $_SESSION[username]";
+			
 			if(!$stmt->execute()){
 				echo "Execute failed: " . $mysqli->connect_errno . " " . $mysqli->connect_error;
 			}
