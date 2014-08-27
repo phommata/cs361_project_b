@@ -51,6 +51,7 @@ _END;
 					exit();
 				} else if($result) {
 					$user_message = "Incorrect Login";
+					$_SESSION['first_name'] = NULL;
 					$_SESSION['logged_in_status'] = false;
 				} 
 			}
