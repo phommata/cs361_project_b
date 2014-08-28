@@ -1,10 +1,15 @@
 <?php
-
+	session_start();
 	//Turn on error reporting
 	ini_set('display_errors', 'On');
-	//Connects to the database
-	$mysqli = new mysqli("oniddb.cws.oregonstate.edu","phommata-db","Lm0QgLxFUbJHtq2D","phommata-db");
-
+	
+	if(!isset($_SESSION['username']) && !isset($_SESSION['logged_in_status'])) {
+		header("Location: login2.php");
+		exit();
+	}
+	
+	require "./db_connect.php";
+	require "./navigation.php";
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -16,7 +21,8 @@
 <body>
 
 <div class="container">
-	<a href="homepage.php">Homepage</a></br></br>
+<!-- 	<a href="homepage.php">Homepage</a></br></br> -->
+	<?php echo $navbar; ?>
 	<h1 class="pageHeader">Search Listings</br></br></h1>
 	<table>
 		<tr>
@@ -33,8 +39,6 @@
 				<legend>Job Listings</legend>
 					<select name="Homepage">
 						<?php
-// 							echo '<option value="0"> All </option>\n';
-
 							if(!($stmt = $mysqli->prepare("SELECT j.job_id, j.job_name, j.job_emp, j.job_desc, j.job_pay, s.skill_id, s.skill_name 
 															FROM job j 
 															INNER JOIN job_skills js ON j.job_id = js.job_id
