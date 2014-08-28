@@ -9,10 +9,8 @@
 	}
 	
 	//Connects to the database
-	$mysqli = new mysqli("oniddb.cws.oregonstate.edu","phommata-db","Lm0QgLxFUbJHtq2D","phommata-db");
-	if($mysqli->connect_errno){
-		echo "Connection error " . $mysqli->connect_errno . " " . $mysqli->connect_error;
-		}
+	require "./db_connect.php";
+	require "./navigation.php";
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -23,6 +21,7 @@
 	<link rel="stylesheet" href="stylesheets/bootstrap/css/docs.min.css">
 <body>
 <div class="container">
+	<?php echo $navbar; ?>
 	<h1 class="pageHeader"><?php echo $_SESSION['first_name']; ?>'s Homepage</br></br></h1>
 	<table>
 		<tr>
