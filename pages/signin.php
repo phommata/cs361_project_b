@@ -3,7 +3,7 @@ ini_set('display_errors', 'On');
 session_start();
 
 if (isset($_SESSION['logged_in_status'])){
-  header('Location: ./landing_page.php');
+  header('Location: ./profile_page.php');
   exit;
 }
 ?>
@@ -17,11 +17,12 @@ if (isset($_SESSION['logged_in_status'])){
 	<link rel="stylesheet" href="stylesheets/bootstrap/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="stylesheets/bootstrap/css/docs.min.css">
 	<link rel="stylesheet" href="stylesheets/bootstrap/css/signin.css">
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	
 
 </head>
 <body>
-	<form id="signin" class="form-signin" role="form" action="index.php?check=1" method="post">
+	<form id="signin" class="form-signin" role="form" action="signin.php?check=1" method="post">
         <div id="badLoginMessage">
         </div>
         <h2 class="form-signin-heading">Please sign in</h2>
@@ -42,6 +43,16 @@ if (isset($_SESSION['logged_in_status'])){
       });
     });
 
+    function printError(){
+        var addHere = document.getElementById('badLoginMessage');
+        
+        var thing = "<div class='alert alert-danger'>";
+        thing += "<a href='#' class='close' data-dismiss='alert'>&times;</a><strong>Error: </strong> Inccorect login credentials";
+        thing +="<div/>";
+        //var thing = "something";
+        addHere.innerHTML = thing;
+      }
+
     function trySignin() {
       var formData = $("#signin").serialize();
       $.ajax({
@@ -53,7 +64,7 @@ if (isset($_SESSION['logged_in_status'])){
                 printError();
               }
               else
-                window.location.replace('../landing_page/index.php');
+                window.location.replace('./homepage.php');
             },
             dataType: "html"
           });
