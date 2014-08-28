@@ -1,9 +1,16 @@
 <?php
+ini_set('display_errors', 'On');
+session_start();
 require "./db_connect.php";
 require "./profile_page_functions.php";
+require "./navigation.php";
 //THIS LINE NEEDS TO BE CHANGED TO $usr = $_SESSION['username'];
-$usr = "sampleuser1";
-
+//$usr = "sampleuser1";
+if (!(isset($_SESSION['logged_in_status']))){
+header('Location: ./signin.php');
+exit;
+}
+$usr = $_SESSION['username'];
 
 ?>
 <!DOCTYPE html>
@@ -19,7 +26,9 @@ $usr = "sampleuser1";
 
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
+    <?php
+        echo $navbar; ?>
 	<h2 class="pageHeader">Edit Profile</h2>
 	<legend>Current Profile</legend>
 		<?php

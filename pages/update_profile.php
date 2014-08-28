@@ -1,7 +1,15 @@
 <?php
+ini_set('display_errors', 'On');
+session_start();
+
 require "./db_connect.php";
 require "./profile_page_functions.php";
-$usr = "sampleuser1"; //NEEDS TO BE UPDATED TO SESSION!!!!!!!
+if (!(isset($_SESSION['logged_in_status']))){
+  header('Location: ./signin.php');
+  exit;
+}
+//$usr = "sampleuser1"; //NEEDS TO BE UPDATED TO SESSION!!!!!!!
+$usr = $_SESSION['username'];
 	
 	$experience = isset($_POST["experience"])?trim($_POST["experience"]):"";
 	$bio = isset($_POST["bio"])?trim($_POST["bio"]):"";

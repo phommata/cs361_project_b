@@ -1,4 +1,6 @@
 <?php
+require "./db_connect.php";
+/*
 	ini_set('display_errors', 'On');
 	session_start();
 	if(isset($_SESSION['loggedinstatus'])) {
@@ -7,6 +9,8 @@
 		}
 	}
 	
+*/
+
 	function add_user($username, $password, $fname, $lname, $email, $mysqli) {
 		$dbquery = "INSERT INTO usr_db (username, pass, first_name, last_name, email_address) VALUES (".$username.",".$password.",".$fname.",".$lname.",".$email.")";
 		$_SESSION['username'] = $username;
@@ -21,13 +25,13 @@
 		}
 		
 	}
-	
+	/*
 	$mysqli = new mysqli("oniddb.cws.oregonstate.edu", "krullj-db", $mypassword, "krullj-db");
 	if(!$mysqli || $mysqli->connect_errno) {
 		echo "failed to connect";
 	}
 	
-	/*
+	
 		page reloaded when submit
 		check for existence of posted fields
 		if each exist: proceed
@@ -78,14 +82,16 @@
 	<link rel="stylesheet" href="stylesheets/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="stylesheets/bootstrap/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="stylesheets/bootstrap/css/docs.min.css">
-	
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="stylesheets/bootstrap/js/bootstrap.min.js"></script>		
 
 </head>
 <body>
 <div class="container">
 	<h1 class="pageHeader">Create a new account</h1>
         <p id="message">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia aliquid perspiciatis commodi rerum quisquam consequatur vero laborum repudiandae similique facere quod pariatur maiores, blanditiis veniam cum soluta id doloribus, facilis.</p>
-	<form action="signup.php" method="POST">
+	<form id ="signup" action="signup.php" method="POST">
 			<legend>Enter account information</legend>
 			<p>Choose a username and password</p>
 			<div class="form-group">
@@ -97,8 +103,8 @@
 				<input type="password"
 						class="form-control"
 						placeholder="password"
-						id="psswd"
-						name="psswd">
+						id="password"
+						name="password">
 			<p><br>Please provide your first and last name</p>
  				<input type="text"
 						class="form-control"
@@ -116,16 +122,46 @@
 						id="email"
 						name="email">
 			</div>
-			<button class="btn btn-primary" type="submit">signup</button>
+			<button class="btn btn-primary" id="sendForm">signup</button>
+
 	</form>
-<?php
-
-
-?>
+	<br>
+	<div id="afterButton"></div>
 
 </div>
 
-<script src="stylesheets/bootstrap/js/jquery-1.11.0.min.js"></script>
-<script src="stylesheets/bootstrap/js/bootstrap.min.js"></script>	
+
+	<script>
+	$(document).ready(function(){
+		//submit form
+		$("#sendForm").click(function() {
+			checkAndSendForm();
+			event.preventDefault();
+		});
+	});
+
+	function checkAndSendForm(){
+		var formData = $("#signup").serialize();
+		$.ajax({
+				type: "POST",
+				url: "make_account_ajax.php",
+				data: formData,
+				success: function( data ) {
+					//alert("running function");
+/**/
+					if (data == 1) {
+						alert("account created successfully, now signing in");
+						window.location.replace("./profile_page.php");
+					}
+					else {
+						$("#afterButton").html(data);
+					} 
+
+				},
+				dataType: "html"
+		});
+	}
+	
+	</script>
 </body>
 </html>
