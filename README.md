@@ -13,4 +13,4 @@ central repository for group's code
 + 
 
 **Example tests**
-+ testint whether "test\_acct\_already\_exists()" function works [code](https://github.com/osterbit/cs361_project_b/blob/master/unit_tests/test_module_1.php), [live](http://web.engr.oregonstate.edu/~osterbit/cs361/cs361_project_b/unit_tests/test_module_1.php) 
++ testing whether "test\_acct\_already\_exists()" function works [code](https://github.com/osterbit/cs361_project_b/blob/master/unit_tests/test_module_1.php), [live](http://web.engr.oregonstate.edu/~osterbit/cs361/cs361_project_b/unit_tests/test_module_1.php) 
