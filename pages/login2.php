@@ -3,61 +3,55 @@
 	ini_set('display_errors', 'On');
 	
 	// 1. Connect to Database
-		$mysqli = new mysqli("oniddb.cws.oregonstate.edu", "phommata-db", "Lm0QgLxFUbJHtq2D", "phommata-db");
-		
-		//$mysqli = new mysqli("localhost", "root", "", "phommata-db");
-		
-		if($mysqli->connect_errno){
-			echo "Failed to connect to MySQL: (" .$mysqli->connect_errno. ")" .$mysqli->connect_error;
-		}
+	require "./db_connect.php";
 
-		$user_message = "";
+	$user_message = "";
 
 echo <<<_END
 
 _END;
 
 	// 2. Prepare/Bind/Execute Form input into database  
-
-		if($_SERVER['REQUEST_METHOD'] == "POST"){
-			if(isset($_POST['username'], $_POST['password'])){
-				$username = $_POST['username'];  
-				$password = $_POST['password'];  
+	
+	if($_SERVER['REQUEST_METHOD'] == "POST"){
+		if(isset($_POST['username'], $_POST['password'])){
+			$username = $_POST['username'];  
+			$password = $_POST['password'];  
+			
+			$cu_stmt = $mysqli->prepare("SELECT user_id, pass, first_name FROM usr_db 
+										WHERE username = ?");
+			
+			$id = "";
+			$result = "";
+							
+			$cu_stmt->bind_param("s", $username);
+			$cu_stmt->bind_result($id, $result, $first_name);
+			
+			$cu_stmt->execute();
+			
+			$cu_stmt->fetch();
+			
+			$cu_stmt->close();
+							
+			if($password == $result) {
+				$mysqli->close();
+				$user_message = "username & pass good";
 				
-				$cu_stmt = $mysqli->prepare("SELECT user_id, pass, first_name FROM usr_db 
-											WHERE username = ?");
+				$_SESSION['logged_in_status'] = true;
+				$_SESSION['username'] = $username; 
+				$_SESSION['first_name'] = $first_name; 
 				
-				$id = "";
-				$result = "";
-								
-				$cu_stmt->bind_param("s", $username);
-				$cu_stmt->bind_result($id, $result, $first_name);
-				
-				$cu_stmt->execute();
-				
-				$cu_stmt->fetch();
-				
-				$cu_stmt->close();
-								
-				if($password == $result) {
-					$mysqli->close();
-					$user_message = "username & pass good";
-					
-					$_SESSION['logged_in_status'] = true;
-					$_SESSION['username'] = $username; 
-					$_SESSION['first_name'] = $first_name; 
-					
-					header("Location: homepage.php");
-					exit();
-				} else if($result) {
-					$user_message = "Incorrect Login";
-					$_SESSION['first_name'] = NULL;
-					$_SESSION['logged_in_status'] = false;
-				} 
-			}
+				header("Location: homepage.php");
+				exit();
+			} else if($result) {
+				$user_message = "Incorrect Login";
+				$_SESSION['first_name'] = NULL;
+				$_SESSION['logged_in_status'] = false;
+			} 
 		}
-		
-		$mysqli->close();
+	}
+	
+	$mysqli->close();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
 <html>
